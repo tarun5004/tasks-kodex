@@ -3,7 +3,8 @@ import {
     createTodo,
     getTodos,
     getTodoById,
-    updateTodo
+    updateTodo,
+    deleteTodo
 } from "../controllers/todo.controller.js";
 
 import { 
@@ -20,5 +21,6 @@ router.post("/create", validateCreateTodo, createTodo);
 router.get("/", getTodos);
 router.get("/:id", validateTodoId, getTodoById);
 router.patch("/:id", validateTodoId, validateUpdateTodo, updateTodo);
+router.delete("/:id", validateTodoId, deleteTodo);
 
 export default router;

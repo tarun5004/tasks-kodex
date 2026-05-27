@@ -49,4 +49,16 @@ const updateTodo = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Todo updated successfully", todo));
 });
 
-export { createTodo, getTodos, getTodoById, updateTodo };
+const deleteTodo = asyncHandler(async (req, res) => {
+  const todo = await Todo.findByIdAndDelete(req.params.id);
+
+  if (!todo) {
+    throw new ApiError(404, "Todo not found");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Todo deleted successfully", todo));
+});
+
+export { createTodo, getTodos, getTodoById, updateTodo, deleteTodo };
