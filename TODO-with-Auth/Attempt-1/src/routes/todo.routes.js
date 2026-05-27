@@ -1,9 +1,20 @@
 import express from "express";
-import { getTodo, getTodoById } from "../controllers/todo.controller.js";
+import { 
+    createTodo,
+    getTodos 
+} from "../controllers/todo.controller.js";
+
+import { 
+    validateCreateTodo,
+    validateUpdateTodo
+} from "../middlewares/validation.middleware.js";
+
 
 const router = express.Router();
 
-router.get("/", getTodo);
-router.get("/:id", getTodoById);
+
+router.post("/create", validateCreateTodo, createTodo);
+router.get("/", getTodos);
+// router.get("/:id", getTodoById);
 
 export default router;
