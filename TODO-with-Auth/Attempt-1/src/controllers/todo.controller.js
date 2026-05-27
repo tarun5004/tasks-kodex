@@ -34,4 +34,19 @@ const getTodoById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, "Todo fetched successfully", todo));
 });
 
-export { createTodo, getTodos, getTodoById };
+const updateTodo = asyncHandler(async (req, res) => {
+  const todo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!todo) {
+    throw new ApiError(404, "Todo not found");
+  }
+
+  res
+    .status(200)
+    .json(new ApiResponse(200, "Todo updated successfully", todo));
+});
+
+export { createTodo, getTodos, getTodoById, updateTodo };

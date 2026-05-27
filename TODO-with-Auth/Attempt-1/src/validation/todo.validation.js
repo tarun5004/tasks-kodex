@@ -1,4 +1,13 @@
 import ApiError from "../utils/ApiError.js";
+import mongoose from "mongoose";
+
+const validateTodoId = (req, res, next) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    throw new ApiError(400, "Invalid todo id");
+  }
+
+  next();
+};
 
 const validateCreateTodo = (req, res, next) => {
   const { title, description } = req.body;
@@ -29,6 +38,14 @@ const validateCreateTodo = (req, res, next) => {
 const validateUpdateTodo = (req, res, next) => {
   const { title, description, completed } = req.body;
 
+  if (
+    title === undefined &&
+    description === undefined &&
+    completed === undefined
+  ) {
+    throw new ApiError(400, "At least one field is required to update");
+  }
+
   if (title !== undefined) {
     if (typeof title !== "string") {
       throw new ApiError(400, "Title must be a string");
@@ -50,4 +67,4 @@ const validateUpdateTodo = (req, res, next) => {
   next();
 };
 
-export { validateCreateTodo, validateUpdateTodo };
+export { validateTodoId, validateCreateTodo, validateUpdateTodo };
