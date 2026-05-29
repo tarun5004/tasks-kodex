@@ -1,6 +1,11 @@
 import app from './src/app.js';
 import dotenv from 'dotenv';
+import connectDB from './src/config/db.js';
+
+
 dotenv.config();
+
+await connectDB();
 
 
 let PORT = process.env.PORT || 3000;
