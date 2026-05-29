@@ -1,0 +1,9 @@
+flow auth -> 
+
+1. user.model.js
+2. auth.controller.js
+3. auth.routes.js
+4. auth.middleware.js
+5. notes.model.js
+6. notes.controller.js
+7. notes.routes.js
