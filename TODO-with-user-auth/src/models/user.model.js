@@ -51,5 +51,17 @@ userSchema.methods.isPasswordMatch = async function (plainPassword) {
     return await bcrypt.compare(plainPassword, this.password);
 }
 
+// jwt token generation method
+userSchema.methods.generateAuthToken = function () {
+  const token = jwt.sign({ 
+    _id: this._id,
+    email: this.email,
+  },
+  process.env.JWT_SECRET,
+  { expiresIn: "1h" }
+  );
+  return token;
+}
+
 const User = mongoose.model("User", userSchema);
 export default User;

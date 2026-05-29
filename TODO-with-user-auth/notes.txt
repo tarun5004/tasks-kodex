@@ -15,3 +15,14 @@ Validation = gatekeeper
 Controller = waiter
 Service = kitchen
 Model = database table
+
+
+save user in db with refrence flow-
+1. Register user
+2. DB me user save
+3. JWT token generate
+4. Client token save karega
+5. Notes route pe token bhejega
+6. Auth middleware token verify karega
+7. req.user me user attach karega
+8. Note create hoga with owner: req.user._id
