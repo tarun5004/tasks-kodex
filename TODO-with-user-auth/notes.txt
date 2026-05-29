@@ -7,3 +7,11 @@ flow auth ->
 5. notes.model.js
 6. notes.controller.js
 7. notes.routes.js
+
+
+always rember
+
+Validation = gatekeeper
+Controller = waiter
+Service = kitchen
+Model = database table
