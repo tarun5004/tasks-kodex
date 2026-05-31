@@ -7,6 +7,7 @@ import ApiError from "../utils/ApiError.js";
 
 // validation function for user registration
 const validateRegister = (req, res, next) => {
+  console.log("Validating registration data:", req.body);
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {

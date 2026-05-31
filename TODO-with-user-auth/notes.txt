@@ -26,3 +26,10 @@ save user in db with refrence flow-
 6. Auth middleware token verify karega
 7. req.user me user attach karega
 8. Note create hoga with owner: req.user._id
+
+
+debug order
+controller log aaya? request route tak pahuchi
+service log aaya? controller service call kar raha hai
+pre-save log aaya? DB create start hua
+error middleware log aaya? exact error stack milega

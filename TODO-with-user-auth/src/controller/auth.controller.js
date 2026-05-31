@@ -18,6 +18,7 @@ import {
 
 // controller function for user registration
 const registerUser = asyncHandler(async (req, res) => {
+  console.log("Registering user with data:", req.body);
   const result = await registerUserService(req.body);
 // ApiResponse is a custom response format that includes status code, message, and data. It helps to maintain a consistent response structure across the application.
   res

@@ -36,14 +36,13 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving >>>>>> 
 // ismodified() checks if the password field has been modified. If it hasn't, we skip hashing to avoid unnecessary work and potential issues with already hashed passwords.
-userSchema.pre("save", async function (next) {
+userSchema.pre("save", async function () {
     if (!this.isModified("password")) {
-        return next();
+        return ;
     }
 
     // If the password has been modified (or it's a new user), we hash it before saving.
     this.password = await bcrypt.hash(this.password, 10);
-    next();
 });
 
 

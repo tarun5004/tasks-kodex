@@ -3,15 +3,17 @@ import User from '../models/user.model.js';
 
 // service function for user registration
 const registerUserService = async ({ name, email, password }) => {
+  console.log("Registering user with data:", { name, email, password: "********" });
     // check if user already exists
     const existingUser = await User.findOne({ email });
+    console.log("Existing user found:", existingUser);
     if (existingUser) {
         throw new ApiError(400, "User already exists");
     }
 
     // create new user
     const user = await User.create({ name, email, password });
-    
+    console.log("New user created:", user);
 // generate JWT token for the new user
     const token = user.generateAccessToken();
 // return user data without password and the token

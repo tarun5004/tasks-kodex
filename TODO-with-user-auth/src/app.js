@@ -5,8 +5,17 @@ import authRoutes from './routes/auth.routes.js';
 import notesRoutes from './routes/notes.routes.js';
 let app = express();
 
+
+// debugging middleware to log incoming requests
+app.use((req, res, next) => {
+  console.log("REQUEST:", req.method, req.url);
+  next();
+});
+
 // middleware to parse JSON request bodies
 app.use(express.json());
+
+
 
 // importing routes
 app.use('/api/auth',authRoutes);

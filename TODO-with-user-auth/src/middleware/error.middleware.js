@@ -4,8 +4,16 @@
 // use this middleware after all the routes in the app.js file
 
 const errorHandler = (err, req, res, next) => {
+  console.error("ERROR NAME:", err.name);
+  console.error("ERROR MESSAGE:", err.message);
+  console.error("ERROR STACK:", err.stack);
+
   let statusCode = err.statusCode || 500;
   let message = err.message || "Internal server error";
+
+  console.error("ERROR NAME:", err.name);
+  console.error("ERROR MESSAGE:", err.message);
+  console.error("ERROR STACK:", err.stack);
 
 //   validation error is thrown by mongoose when the data does not match the schema
   if (err.name === "ValidationError") {
