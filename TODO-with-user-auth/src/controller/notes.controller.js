@@ -14,7 +14,7 @@ const createNoteController = asyncHandler(async (req, res) =>{
 // send the response with the created note
     res
         .status(201)
-        .json(new ApiResponse(201, note, "Note created successfully"));
+        .json(new ApiResponse(201, "Note created successfully", note));
 });
 
 export { createNoteController }

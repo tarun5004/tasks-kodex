@@ -1,8 +1,8 @@
-import ApiError from '../error/ApiError.js';
-import User from '../model/user.model.js';
+import ApiError from '../utils/ApiError.js';
+import User from '../models/user.model.js';
 
 // service function for user registration
-const registerUserSrvice = async ({ name, email, password }) => {
+const registerUserService = async ({ name, email, password }) => {
     // check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -13,7 +13,7 @@ const registerUserSrvice = async ({ name, email, password }) => {
     const user = await User.create({ name, email, password });
     
 // generate JWT token for the new user
-    const token = user.generateAuthToken();
+    const token = user.generateAccessToken();
 // return user data without password and the token
     const safeUser = await User.findById(user._id).select("-password");
 // return the user data and token to the controller
@@ -53,4 +53,4 @@ const loginUserService = async ({ email, password }) => {
 
 
 
-export { registerUserSrvice, loginUserService };
+export { registerUserService, loginUserService };

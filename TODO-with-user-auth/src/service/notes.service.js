@@ -1,4 +1,4 @@
-import Note from "../models/notes.model";
+import Note from "../models/notes.model.js";
 
 // note service for creating a note
 const createNoteService = async ({title, content, userId}) => {

@@ -1,6 +1,7 @@
 // src/models/user.model.js
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,21 +39,22 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
     if (!this.isModified("password")) {
         return next();
-    // If the password has been modified (or it's a new user), we hash it before saving.
-        this.password = await bcrypt.hash(this.password, 10);
-        next();
     }
+
+    // If the password has been modified (or it's a new user), we hash it before saving.
+    this.password = await bcrypt.hash(this.password, 10);
+    next();
 });
 
 
 // method to compare password 
 // isPasswordMatch() is an instance method that compares a plain text password with the hashed password stored in the database. It uses bcrypt's compare function to perform this comparison and returns a boolean indicating whether the passwords match.
-userSchema.methods.isPasswordMatch = async function (plainPassword) {
+userSchema.methods.isPasswordCorrect = async function (plainPassword) {
     return await bcrypt.compare(plainPassword, this.password);
 }
 
 // jwt token generation method
-userSchema.methods.generateAuthToken = function () {
+userSchema.methods.generateAccessToken = function () {
   const token = jwt.sign({ 
     _id: this._id,
     email: this.email,

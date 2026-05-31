@@ -2,7 +2,7 @@
 // checks for required fields and validates input format
 // throws errors if validation fails
 
-import ApiError from "../utils/apiError.js";
+import ApiError from "../utils/ApiError.js";
 
 
 // validation function for user registration
