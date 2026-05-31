@@ -10,4 +10,10 @@ const createNoteService = async ({title, content, userId}) => {
     return note;
 }
 
-export {createNoteService}
+// Fetch only notes that belong to the logged-in user.
+const getMyNotesService = async (userId) => {
+    const notes = await Note.find({ owner: userId }).sort({ createdAt: -1 });
+    return notes;
+}
+
+export {createNoteService, getMyNotesService}
