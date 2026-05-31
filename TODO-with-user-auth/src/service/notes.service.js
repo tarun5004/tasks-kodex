@@ -1,4 +1,5 @@
 import Note from "../models/notes.model.js";
+import ApiError from "../utils/ApiError.js";
 
 // note service for creating a note
 const createNoteService = async ({title, content, userId}) => {
@@ -16,4 +17,15 @@ const getMyNotesService = async (userId) => {
     return notes;
 }
 
-export {createNoteService, getMyNotesService}
+// Find one note only when it belongs to the logged-in user.
+const getNoteByIdService = async ({ noteId, userId }) => {
+    const note = await Note.findOne({ _id: noteId, owner: userId });
+
+    if (!note) {
+        throw new ApiError(404, "Note not found");
+    }
+
+    return note;
+}
+
+export {createNoteService, getMyNotesService, getNoteByIdService}
