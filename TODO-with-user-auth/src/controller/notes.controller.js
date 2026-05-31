@@ -1,6 +1,6 @@
 import asyncHandler from '../utils/asyncHandler.js';
 import ApiResponse from '../utils/ApiResponse.js';
-import { createNoteService, getMyNotesService, getNoteByIdService, updateNoteService } from '../service/notes.service.js';
+import { createNoteService, getMyNotesService, getNoteByIdService, updateNoteService, deleteNoteService } from '../service/notes.service.js';
 
 // controller for creating a note
 const createNoteController = asyncHandler(async (req, res) =>{
@@ -51,4 +51,16 @@ const updateNoteController = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, "Note updated successfully", note));
 });
 
-export { createNoteController, getMyNotesController, getNoteByIdController, updateNoteController }
+// controller for deleting a note owned by the logged-in user
+const deleteNoteController = asyncHandler(async (req, res) => {
+    const note = await deleteNoteService({
+        noteId: req.params.id,
+        userId: req.user._id,
+    });
+
+    res
+        .status(200)
+        .json(new ApiResponse(200, "Note deleted successfully", note));
+});
+
+export { createNoteController, getMyNotesController, getNoteByIdController, updateNoteController, deleteNoteController }

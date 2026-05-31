@@ -58,4 +58,15 @@ const updateNoteService = async ({ noteId, userId, updates }) => {
     return note;
 }
 
-export {createNoteService, getMyNotesService, getNoteByIdService, updateNoteService}
+// Delete only the note that belongs to the logged-in user.
+const deleteNoteService = async ({ noteId, userId }) => {
+    const note = await Note.findOneAndDelete({ _id: noteId, owner: userId });
+
+    if (!note) {
+        throw new ApiError(404, "Note not found");
+    }
+
+    return note;
+}
+
+export {createNoteService, getMyNotesService, getNoteByIdService, updateNoteService, deleteNoteService}
