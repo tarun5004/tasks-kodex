@@ -1,6 +1,6 @@
 import asyncHandler from '../utils/asyncHandler.js';
 import ApiResponse from '../utils/ApiResponse.js';
-import { createNoteService, getMyNotesService, getNoteByIdService } from '../service/notes.service.js';
+import { createNoteService, getMyNotesService, getNoteByIdService, updateNoteService } from '../service/notes.service.js';
 
 // controller for creating a note
 const createNoteController = asyncHandler(async (req, res) =>{
@@ -38,4 +38,17 @@ const getNoteByIdController = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, "Note fetched successfully", note));
 });
 
-export { createNoteController, getMyNotesController, getNoteByIdController }
+// controller for updating a note owned by the logged-in user
+const updateNoteController = asyncHandler(async (req, res) => {
+    const note = await updateNoteService({
+        noteId: req.params.id,
+        userId: req.user._id,
+        updates: req.body,
+    });
+
+    res
+        .status(200)
+        .json(new ApiResponse(200, "Note updated successfully", note));
+});
+
+export { createNoteController, getMyNotesController, getNoteByIdController, updateNoteController }

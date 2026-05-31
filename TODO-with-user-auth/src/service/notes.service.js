@@ -28,4 +28,34 @@ const getNoteByIdService = async ({ noteId, userId }) => {
     return note;
 }
 
-export {createNoteService, getMyNotesService, getNoteByIdService}
+// Update only safe note fields for the logged-in user's note.
+const updateNoteService = async ({ noteId, userId, updates }) => {
+    const updateData = {
+        title: updates.title,
+        content: updates.content,
+    };
+
+    Object.keys(updateData).forEach((key) => {
+        if (updateData[key] === undefined) {
+            delete updateData[key];
+        }
+    });
+
+    if (Object.keys(updateData).length === 0) {
+        throw new ApiError(400, "At least one field is required to update");
+    }
+
+    const note = await Note.findOneAndUpdate(
+        { _id: noteId, owner: userId },
+        updateData,
+        { new: true, runValidators: true }
+    );
+
+    if (!note) {
+        throw new ApiError(404, "Note not found");
+    }
+
+    return note;
+}
+
+export {createNoteService, getMyNotesService, getNoteByIdService, updateNoteService}
